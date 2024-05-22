@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>lowcode</title>
+   <script>
+    const messageHandler = (event) => {
+    //The message sent is available in the event object.
+    if(event) {
+    // Read the message by using the event.data property
+    const messageReceived = event.data;
+    console.log(messageReceived);
+    //Add code to manipulate the received message
+    }
+};
+
+window.addEventListener('message', messageHandler);
+   </script>   
+</head>
+<body>
+   <button onclick="sendMessage('test')">sendmsg</button>
+    <script>
+function sendMessage(message) {
+    if(message) {
+        //Send the message in postMessage
+        //replace the "<Appsmith_hosted_url>" with your Appsmith domain
+        window.parent.postMessage(message, "*");
+    }
+}
+    </script>
+</body>
+</html>
