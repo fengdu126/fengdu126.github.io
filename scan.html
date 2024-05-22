@@ -17,14 +17,11 @@
     }
 };
 
-     
-
-//add the event listener to read the incoming message
 window.addEventListener('message', messageHandler);
    </script>   
 </head>
 <body>
-   <button onclick="sendMessage('test')">sent msg</button>
+   <button onclick="sendMessage('test')">sendmsg</button>
     <script>
 function sendMessage(message) {
     if(message) {
