@@ -13,6 +13,7 @@
     // Read the message by using the event.data property
     const messageReceived = event.data;
     console.log(messageReceived);
+    iFrame.contentWindow.postMessage(messageReceived, "*")
     //Add code to manipulate the received message
     }
 };
