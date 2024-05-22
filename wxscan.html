@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>企业微信扫一扫示例</title>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script> <!-- 引入企业微信JS-SDK -->
+    <script>
+
+        function getConfig() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', '/api/get-wecom-config', true); // 替换为你的后台API URL
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var config = JSON.parse(xhr.responseText);
+                    wx.config({
+                        debug: false,
+                        appId: config.appId,
+                        timestamp: config.timestamp,
+                        nonceStr: config.nonceStr,
+                        signature: config.signature,
+                        jsApiList: ['scanQRCode']
+                    });
+                }
+            };
+            xhr.send();
+        }
+
+        window.onload = function() {
+            getConfig();
+            wx.ready(function() {
+                console.log('JS-SDK 就绪');
+            });
+
+            wx.error(function(res) {
+                console.error('JS-SDK 出错:', res);
+            });
+        };
+    </script>
+</head>
+<body>
+    <h1>企业微信扫一扫功能</h1>
+    <button onclick="scanQRCode()">点击扫描二维码</button>
+
+    <script>
+        function scanQRCode() {
+            // 调用企业微信的扫一扫API
+            wx.scanQRCode({
+                needResult: 1, // 默认为0，扫描结果由企业微信处理
+                // 1则直接返回扫描结果，
+                scanType: ["qrCode","barCode"], // 可以指定扫二维码还是一维码
+                success: function (res) {
+                    // 当needResult 为 1 时，res.resultStr 就是扫描结果
+                    var result = res.resultStr;
+                    console.log(result);
+                    alert("扫描结果: " + result);
+                },
+                fail: function (err) {
+                    console.error("扫描失败: ", err);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
